@@ -1,0 +1,191 @@
+<!-- Question- -->
+What is the difference between StringBuilder and StringBuffer in Java? 
+Ans-StringBuffer is thread-safe, and StringBuilder is not.
+<!-- Question- -->
+What does the volatile keyword do in Java? 
+Ans-Ensures a variable's value is visible to all threads.
+<!-- Question- -->
+What will the following code print? 
+    int x = 10;
+    int y = ++x;
+    System.out.println(x + " " + y);
+Ans-11 11
+<!-- Question- -->
+Which collection allows null keys and values in Java? 
+Ans-HashMap
+<!-- Question- -->
+Which of the following is not a feature of Java 8?
+Ans-Modules
+<!-- Question- -->
+Write an SQL query to fetch the titles of books that have a price greater than $20 from a table named 
+Ans-Select title from table_name
+   where price>20;
+<!-- Question- -->
+Connect to a MySQL database in Java using JDBC and retrieve all rows from the books table. Display the results in the console.
+Ans-String url="jdbc:mysql://localhost:3306/database_name";
+String user = "User_name";
+String password = "Your_Password";
+try {
+    Connection con = DriverManager.getConnection(url = url, user = user, password = password);
+    Statement statement = connection.createStatement();
+    ResultSet resultSet = statement.executeQuery("SELECT * FROM database_name");
+    while (resultSet.next()) {
+        System.out.println(resultSet.getInt("id") + ", " +
+                           resultSet.getString("title") + ", " +
+                           resultSet.getString("author"));
+    }
+    resultSet.close();
+    statement.close();
+    connection.close();
+} catch (Exception e) {
+    System.out.println(e.getMessage());
+}
+
+<!-- Question- -->
+The following code throws a NullPointerException. Fix the issue.
+public class NullPointerExample {
+    public static void main(String[] args) {
+        String str = null;
+        System.out.println(str.length());
+    }
+}
+
+Answer-
+public class NullPointerExample {
+    public static void main(String[] args) {
+        String str = null;
+        try {
+            System.out.println(str.length());
+        } catch (NullPointerException e) {
+            e.getMessage;
+        }
+    }
+}
+
+<!-- Question- -->
+Explain the purpose of the @RestController annotation in Spring Boot. (5 points)
+Ans-@RestController makes it easy to create REST APIs by combining controller logic 
+and the ability to send back JSON data directly, all without extra configuration.
+Instead of manually specifying response types, it automatically converts the result
+(such as a Java object) into a format like JSON.You don’t need to worry about manually 
+serializing (converting) your Java objects to JSON. Spring Boot does this for you automatically.
+
+<!-- Question- -->
+Problem:
+
+Create a REST API endpoint to manage a list of books. Implement the following:
+
+GET /books: Retrieve all books.
+
+POST /books: Add a new book. Each book should have a unique ID, title, author, and price.
+
+DELETE /books/{id}: Delete a book by ID.
+
+Write the Java code using Spring Boot.
+
+Answer-
+
+<!-- main method -->
+package com.assignment.assignment1;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Assignment1Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Assignment1Application.class, args);
+	}
+
+}
+<!-- Entity -->
+package com.assignment.assignment1.Entity;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table
+public class data {
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column
+    private String title;
+    @Column
+    private String author;
+    @Column
+    private double price;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public data(Long id, String title, String author, double price) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.price = price;
+    }
+    public data(){
+        
+    }
+
+}
+
+<!-- Repository -->
+package com.assignment.assignment1.Repo;
+
+import com.assignment.assignment1.Entity.data;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface Book  extends JpaRepository<data,Long> {
+}
+
+<!-- application properties -->
+spring.application.name=assignment1
+
+spring.datasource.url=jdbc:mysql://localhost:3306/Book
+spring.datasource.username=root
+spring.datasource.password=Your_Password
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+logging.level.org.thymeleaf=debug
+
+<!-- Service -->
+
+
+
+
+
